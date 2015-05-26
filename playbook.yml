@@ -2,9 +2,7 @@
 - hosts: all
   roles:
     - common
-    - databases
-    - nginx
-    - ruby
-#    - ios
-#    - mail
     - osx
+    - ruby
+    - dev_web
+    - dev_mobile

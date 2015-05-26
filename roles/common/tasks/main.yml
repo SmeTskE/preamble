@@ -19,29 +19,79 @@
 - name: Clean homebrew cask
   shell: brew cask cleanup
 
+
+- name: Ensure presence of bash_profile
+  file: state=touch path={{home_directory}}/.bash_profile
+
+- name: Load bashrc in bash_profile
+  lineinfile: dest={{home_directory}}/.bash_profile regexp="\. \$HOME\/\.bashrc" line="[[ -r $HOME/.bashrc ]] && . $HOME/.bashrc"
+
+- name: Ensure presence of bashrc
+  file: state=touch path={{home_directory}}/.bashrc
+
+- name: Add local bin to $PATH
+  lineinfile: dest={{home_directory}}/.bashrc regexp="^export PATH\=\$HOME\/local\/bin" line="export PATH=$HOME/local/bin:$PATH"
+
+- name: Add brew to beginning of $PATH
+  lineinfile: dest={{home_directory}}/.bashrc regexp="^export PATH=\/usr\/local\/bin" line="export PATH=/usr/local/bin:$PATH"
+
+
 - name: Common utilities
   homebrew: name={{ item }} state=present
   tags:
     - utils
   with_items:
     - git
-    - ag     # [A code-searching tool similar to ack, but faster](http://geoff.greer.fm/ag/)
-    - gh     # [Fast github command client](https://github.com/jingweno/gh)
-    - tmux   # [A better screen](http://tmux.sourceforge.net)
-    - links  # [Browse in the terminal](http://links.twibright.com)
+    - node --without-npm   # So I can use npm later on
+    - ansible
+    - httpie
+#    - ag     # [A code-searching tool similar to ack, but faster](http://geoff.greer.fm/ag/)
+#    - gh     # [Fast github command client](https://github.com/jingweno/gh)
+#    - tmux   # [A better screen](http://tmux.sourceforge.net)
+#    - links  # [Browse in the terminal](http://links.twibright.com)
 #    - ngrok  # [Easy way to get a public IP](https://ngrok.com)
-    - htop   # [A better top](http://hisham.hm/htop/)
-    - heroku # Heroku Toolbelt
-    - mosh   # [A better ssh (sometimes)](https://mosh.mit.edu)
-    - tig    # A 'text-mode interface' for git. Bit more visual than regular git.
-    - node   # So I can use npm later on
-    - git-flow
+#    - htop   # [A better top](http://hisham.hm/htop/)
+#    - heroku # Heroku Toolbelt
+#    - mosh   # [A better ssh (sometimes)](https://mosh.mit.edu)
+#    - tig    # A 'text-mode interface' for git. Bit more visual than regular git.
 
-#- name: Install pure (simple and sleak prompt)
-#  npm: name=pure-prompt global=yes
+- name: NodeJs Install
+  homebrew: name={{ item }} state=present
+  with_items:
+    - node --without-npm   # So I can use npm later on
 
-- name: Tap homebrew fonts
+
+- name: NodeJs Creates global npm-packages directory
+  file: path={{home_directory}}/.npm-packages state=directory
+
+- name: NodeJs Add new global dir to $PATH
+  shell: echo NPM_PACKAGES="${HOME}/.npm-packages" >> ${HOME}/.bashrc
+
+- name: NodeJs Update Npmrc
+  shell: echo prefix=${HOME}/.npm-packages >> ${HOME}/.npmrc
+
+- name: NodeJs Install NPM
+  homebrew: name={{ item }} state=present
+  with_items:
+    - npm   # So I can use npm later on
+
+- name: NodeJs Update Npmrc
+  shell: echo NODE_PATH=\"\$NPM_PACKAGES/lib/node_modules\:\$NODE_PATH\" >> ${HOME}/.bashrc
+
+- name: NodeJs Update bashrc
+  shell: echo PATH=\"\$NPM_PACKAGES/bin\:\$PATH\" >> ${HOME}/.bashrc
+
+- name: NodeJs Update bash_profile
+  shell: echo source "~/.bashrc" >> ${HOME}/.bash_profile
+
+- name: NodeJs Source bash_profile
+  shell: source ~/.bashrc
+
+- name: Install pure (simple and sleak prompt)
+  npm: name=pure-prompt global=yes
+
+- name0: Tap homebrew fonts
   homebrew_tap: tap=caskroom/fonts state=present
 
-- name: Install DejaVu Sans Mono
-  homebrew_cask: name=font-dejavu-sans
+#- name: Install DejaVu Sans Mono
+#  homebrew_cask: name=font-dejavu-sans

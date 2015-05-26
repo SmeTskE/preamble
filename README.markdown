@@ -18,7 +18,7 @@ And more, see the `playbook.yml` for more info.
 ### Steps
 
 - Install Xcode
-- `git clone https://github.com/pjaspers/preamble.git`
+- `git clone https://github.com/timmersthomas/preamble.git`
 - `sudo easy_install pip; sudo pip install ansible`
 - `cd preamble`
 - `ansible-playbook playbook.yml --ask-sudo-pass` (it needs sudo for `nginx`)
@@ -28,13 +28,17 @@ Once this is done, installing new things is as easy as changing the `playbook.ym
 I've also tried to add some tags, so you can target specific parts of it (`ansible-playbook --tags=tag1,tag2`) or skip specific parts (`ansbible-playbook --skip-tags=tag1,tag2`).
 
 Available tags:
-
-- `ios` (Installs everything related to iOS)
-- `mail` (Installs mutt and friends)
-- `nginx` (Install nginx and dnsmasq, requires root)
-- `ruby` (Install rubies)
-- `phantomjs` (Install phantomjs)
-- `osx` (Installs os x applications, and also `capslock` and `defaults`)
-- `capslock` (Remaps capslock to control)
+- `osx` (Installs os x applications, and also `defaults`)
 - `defaults` (Sets Finder defaults)
+
+- `dev` (Installs general dev apps)
+
+- `dev_mobile` (Installs ios and android)
+- `dev_mobile_ios` (Installs everything related to iOS)
+- `dev_mobile_android` (Installs everything related to iOS)
+- `dev_web` (Install nginx and dnsmasq, requires root & phantomjs)
+
+- `ruby` (Install rubies)
 - `utils` (Installs common utils)
+
+- `specific_thomas` (Specific apps for Thomas :) #BecauseICan )

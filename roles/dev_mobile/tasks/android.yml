@@ -1,0 +1,7 @@
+---
+# Everything related to Android
+- name: Install Android Dev Applications
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - android-studio
+    - intellij-idea-ce

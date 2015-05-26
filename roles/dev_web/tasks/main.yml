@@ -1,0 +1,7 @@
+
+- include: nginx.yml tags=dev_web,sudo
+- include: database.yml tags=dev_web
+
+- include: npm.yml tags=dev_web
+
+- include: applications.yml tags=dev_web

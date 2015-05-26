@@ -1,0 +1,24 @@
+- name: Install General Dev Applications
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - iterm2                       # a better Terminal
+    - filezilla                    # (s)ftp
+    - colorpicker-developer        # A better color picker (easy access to html/UIColor)
+    - qlstephen                    # Quicklook any possible text file. You need this.
+    - teamviewer
+
+- name: Install specific dev tools (SourcTree Sublime)
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - adobe-creative-cloud
+    - sourcetree
+    - sublime-text
+
+- name: Install virtualization apps
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - virtualbox
+    - vagrant
+    - vagrant-manager
+    - boot2docker
+    - boot2docker-status

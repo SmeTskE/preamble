@@ -1,0 +1,7 @@
+- name: Install MariaDB
+  homebrew: name=mariadb state=present
+
+- name: Install Support database apps
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - mysqlworkbench

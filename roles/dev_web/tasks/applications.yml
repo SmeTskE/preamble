@@ -1,0 +1,4 @@
+- name: Install Dev Web Apps
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - phpstorm

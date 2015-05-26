@@ -1,0 +1,13 @@
+- name: Install Applications
+  homebrew_cask: name={{ item }} state=installed
+  with_items:
+    - 1password                    # Password manager
+    - rdio                         # music
+    - mailbox
+    - alfred
+    - bartender
+    - codekit
+    - duet
+    - evernote
+    - transmit
+    - things

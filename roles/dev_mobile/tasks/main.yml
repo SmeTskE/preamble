@@ -1,0 +1,6 @@
+
+- include: general.yml tags=mobile_dev
+
+- include: ios.yml tags=mobile_dev,mobile_dev_ios
+
+- include: android.yml tags=mobile_dev,mobile_dev_android

@@ -1,0 +1,8 @@
+- name: ensure Node packages are present
+  npm: name={{ item }} global=yes
+  with_items:
+    - grunt
+    - gulp
+    - bower
+    - npm-check-updates
+    - yo
