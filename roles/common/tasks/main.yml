@@ -90,7 +90,7 @@
 - name: Install pure (simple and sleak prompt)
   npm: name=pure-prompt global=yes
 
-- name0: Tap homebrew fonts
+- name: Tap homebrew fonts
   homebrew_tap: tap=caskroom/fonts state=present
 
 #- name: Install DejaVu Sans Mono
