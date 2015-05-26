@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+	home_directory: /home/$username
   roles:
     - common
     - osx
